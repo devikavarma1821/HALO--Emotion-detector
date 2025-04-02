@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #video {
+            border: 2px solid black;
+            width: 50%;
+        }
+        #emotion {
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function clearEmotion() {
+            fetch("/clear", { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("emotion").innerText = "Waiting for new detection...";
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Real-Time Emotion Detection</h1>
+    <img id="video" src="{{ url_for('video_feed') }}">
+
+    <p id="emotion">Waiting for detection...</p>
+
+    <button onclick="clearEmotion()">Clear</button>
+</body>
+</html>
